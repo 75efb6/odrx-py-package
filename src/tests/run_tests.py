@@ -3,7 +3,11 @@ import asyncio
 # Define test cases
 test_cases = {
     "get_user": lambda: __import__("get_user_id").test(),
-    "get_user_by_username": lambda: __import__("get_user_username").test()
+    "get_user_by_username": lambda: __import__("get_user_username").test(),
+    "get_leaderboard_global": lambda: __import__("get_leaderboard_global").test(),
+    "get_leaderboard_country": lambda: __import__("get_leaderboard_country").test(),
+    "get_leaderboard_score": lambda: __import__("get_leaderboard_score").test(),
+    "get_leaderboard_score_country": lambda: __import__("get_leaderboard_score_country").test(),
 }
 
 success = 0

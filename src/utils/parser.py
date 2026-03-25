@@ -65,7 +65,8 @@ def score(score: dict) -> Score:
         misscount=score.get("hmiss"),
         player=player(score.get("player")),
         map=beatmap(score.get("bmap")),
-        date=score.get("date")
+        date=score.get("date"),
+        leaderboard_rank=score.get("rank")
     )
 
 def leaderboard(players: list[dict]) -> list[Player]:
@@ -73,8 +74,22 @@ def leaderboard(players: list[dict]) -> list[Player]:
 
     for p in players:
 
-        player(p)
+        p = player(p)
 
-        lb.append(player)
+        lb.append(p)
+
+    return lb
+
+def beatmap_leaderboard(scores: list[dict]) -> list[Score]:
+    lb = []
+
+    rank = 0
+
+    for s in scores:
+        rank+=1
+        s["rank"] = rank
+        s = score(s)
+
+        lb.append(s)
 
     return lb

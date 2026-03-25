@@ -19,3 +19,4 @@ class Score:
     player: Player
     map: Beatmap
     date: str
+    leaderboard_rank: int = None
