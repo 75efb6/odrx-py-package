@@ -1,9 +1,8 @@
 import asyncio
 
-# Import tests
-
 # Define test cases
 test_cases = {
+    "get_user": lambda: __import__("test_get_user_id").test(),
 }
 
 success = 0

@@ -8,8 +8,8 @@ setup(
         'aiohttp',
     ],
     packages=find_packages(exclude=["tests*", "tests.*"]),
-    py_modules=['odrx-py'],
-    url="https://github.com/75efb6/odrx-py",
+    py_modules=['odrx_py'],
+    url="https://github.com/75efb6/odrx-py-package",
     author="75efb6",
     description="A Python package for the osu!droid relax API.",
 )
