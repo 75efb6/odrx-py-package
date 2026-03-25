@@ -30,6 +30,7 @@ class APIClient:
         req = await self.api.get(self.endpoints["get_user"]+f"?username={username}")
 
         return utils.parser.player(req)
+    
     """async def get_beatmap_fromid(self, map_id: int) -> Beatmap:
         req = await self.api.get(self.endpoints["beatmap"]+f"?id={map_id}")
 
@@ -50,10 +51,10 @@ class APIClient:
 
         return utils.parser.beatmap_leaderboard(req)"""
     
-    async def get_leaderboard(self, type: str = "pp", country: str = "None") -> list[Player]:
+    async def get_leaderboard(self, type: str = "pp", country: str = None) -> list[Player]:
         if type not in ["pp", "score"]:
             raise ValueError("Invalid leaderboard type. Must be 'pp' or 'score'.")
 
-        req = await self.api.get(self.endpoints["leaderboard"]+f"?type={type}"+(f"&country={country}"if country != "None" else ""))
+        req = await self.api.get(self.endpoints["leaderboard"]+f"?type={type}"+(f"&country={country}"if country else ""))
 
         return utils.parser.leaderboard(req)
