@@ -2,7 +2,8 @@ import asyncio
 
 # Define test cases
 test_cases = {
-    "get_user": lambda: __import__("test_get_user_id").test(),
+    "get_user": lambda: __import__("get_user_id").test(),
+    "get_user_by_username": lambda: __import__("get_user_username").test()
 }
 
 success = 0

@@ -23,6 +23,7 @@ def player(player: dict) -> Player:
         id=player.get("id"),
         name=player.get("username"),
         country=player.get("country"),
+        is_online=player.get("online"),
         stats=stats
     )
 
@@ -67,7 +68,7 @@ def score(score: dict) -> Score:
         date=score.get("date")
     )
 
-def leaderboard(players: list[dict], limit: int) -> list[LeaderboardPlayer]:
+def leaderboard(players: list[dict]) -> list[Player]:
     lb = []
 
     for p in players:

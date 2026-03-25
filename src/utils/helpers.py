@@ -32,7 +32,7 @@ class ModHelper:
         return "".join(parsed)
     
 def check_get_user_attrs(uid: int=None, username: str=None, from_username: bool=False):
-        if from_username is not True or False:
+        if from_username is not True and from_username is not False:
             raise Exception("from_username must be True or False")
         if username is None and from_username is True:
             raise Exception("Username must not be empty if from_username is True.")

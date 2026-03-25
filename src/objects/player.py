@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 # Dependencies for Player class
-from objects.stats import Stats, LeaderboardStats
+from objects.stats import Stats
 
 @dataclass
 class Player:

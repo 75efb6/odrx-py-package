@@ -14,9 +14,9 @@ class APIClient:
         }
 
     
-    async def get_user(self, user_id: int, username: str, from_username: bool) -> Player:
+    async def get_user(self, user_id: int = None, username: str = None, from_username: bool = False) -> Player:
         utils.helpers.check_get_user_attrs(uid=user_id, username=username, from_username=from_username)
         
-        req = await self.api.get(self.endpoints["get_user"]+f"?id={user_id}&name={username}")
+        req = await self.api.get(self.endpoints["get_user"]+f"?id={user_id}") if from_username is False else await self.api.get(self.endpoints["get_user"]+f"?username={username}")
 
         return utils.parser.player(req)
