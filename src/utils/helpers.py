@@ -31,14 +31,12 @@ class ModHelper:
 
         return "".join(parsed)
     
-def check_get_user_attrs(uid: int=None, username: str=None, from_username: bool=False):
-        if from_username is not True and from_username is not False:
-            raise Exception("from_username must be True or False")
-        if username is None and from_username is True:
-            raise Exception("Username must not be empty if from_username is True.")
-        elif isinstance(username, str) is not True and from_username is True:
+def check_get_user_attrs(uid: int=None, username: str=None):
+        if username is None and uid is None:
+            raise Exception("Username or UID must be provided.")
+        elif isinstance(username, str) is not True and uid is None:
             raise Exception("Username must be string.")
-        if uid is None and from_username is False:
+        if uid is None and username is None:
             raise Exception("UID must not be empty if from_username is False.")
-        elif isinstance(uid, int) is not True and from_username is False:
+        elif isinstance(uid, int) is not True and username is None:
             raise Exception("UID must be int.")
