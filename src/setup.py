@@ -4,7 +4,7 @@ setup(
     name="odrx.py",
     version="1.0.0",
     description="Async Python client for the osu!droid relax (ODRX) API",
-    long_description=open("README.md", encoding="utf-8").read(),
+    long_description=open("../README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="75efb6",
     url="https://github.com/75efb6/odrx-py-package",
