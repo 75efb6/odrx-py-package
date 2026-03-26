@@ -2,7 +2,7 @@
 set -e  # Stop on first error
 
 echo "🧹 Cleaning old artifacts..."
-rm -rf build dist *.egg-info
+rm -rf src/build src/dist src/*.egg-info
 
 echo "Activating venv..."
 rm -rf .venv
