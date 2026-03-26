@@ -23,7 +23,7 @@ def player(player: dict) -> Player:
         id=player.get("id"),
         name=player.get("username"),
         country=player.get("country"),
-        is_online=player.get("online"),
+        is_online=player.get("online", False),
         stats=stats
     )
 
@@ -41,6 +41,7 @@ def beatmap(bmap: dict) -> Beatmap:
         ar=bmap.get("ar"),
         cs=bmap.get("cs"),
         od=bmap.get("od"),
+        hp=bmap.get("hp"),
         mode=bmap.get("mode"),
         stars=bmap.get("star"),
         status=bmap.get("status"),
@@ -48,7 +49,7 @@ def beatmap(bmap: dict) -> Beatmap:
     )
 
 def score(score: dict) -> Score:
-    mod_parser = ModHelper(mods=score.get("Mods"))
+    mod_parser = ModHelper(mods=score.get("mods"))
     score["mods"] = mod_parser.parse
 
     return Score(

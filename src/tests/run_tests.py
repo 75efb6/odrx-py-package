@@ -8,6 +8,13 @@ test_cases = {
     "get_leaderboard_country": lambda: __import__("get_leaderboard_country").test(),
     "get_leaderboard_score": lambda: __import__("get_leaderboard_score").test(),
     "get_leaderboard_score_country": lambda: __import__("get_leaderboard_score_country").test(),
+    "get_whitelist": lambda: __import__("get_whitelist").test(),
+    "get_recent_scores": lambda: __import__("get_recent_scores").test(),
+    "get_top_scores": lambda: __import__("get_top_scores").test(),
+    "get_beatmap_fromid": lambda: __import__("get_beatmap_fromid").test(),
+    "get_beatmap_frommd5": lambda: __import__("get_beatmap_frommd5").test(),
+    "get_beatmap_leaderboard_fromid": lambda: __import__("get_beatmap_leaderboard_fromid").test(),
+    "get_beatmap_leaderboard_frommd5": lambda: __import__("get_beatmap_leaderboard_frommd5").test(),
 }
 
 success = 0

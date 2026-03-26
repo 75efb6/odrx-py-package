@@ -3,7 +3,7 @@ from typing import Optional
 
 class ModHelper:
     def __init__(self, mods: Optional[dict] = None):
-        self.mods = json.loads(mods)
+        self.mods = json.loads(mods) if mods else None
     
     @property
     def parse(self) -> str:
