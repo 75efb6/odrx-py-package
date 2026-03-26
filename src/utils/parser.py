@@ -1,8 +1,9 @@
-from objects.stats import Stats
-from objects.score import Score
-from objects.player import Player
 from objects.beatmap import Beatmap
+from objects.player import Player
+from objects.score import Score
+from objects.stats import Stats
 from utils.helpers import ModHelper
+
 
 def player(player: dict) -> Player:
     stats = player.get("stats")
@@ -16,18 +17,19 @@ def player(player: dict) -> Player:
         acc=stats.get("acc"),
         total_score=stats.get("tscore"),
         ranked_score=stats.get("rscore"),
-        total_playcount=stats.get("plays")
+        total_playcount=stats.get("plays"),
     )
-    
+
     player = Player(
         id=player.get("id"),
         name=player.get("username"),
         country=player.get("country"),
         is_online=player.get("online", False),
-        stats=stats
+        stats=stats,
     )
 
     return player
+
 
 def beatmap(bmap: dict) -> Beatmap:
     return Beatmap(
@@ -45,8 +47,9 @@ def beatmap(bmap: dict) -> Beatmap:
         mode=bmap.get("mode"),
         stars=bmap.get("star"),
         status=bmap.get("status"),
-        lenght=bmap.get("lenght")
+        lenght=bmap.get("lenght"),
     )
+
 
 def score(score: dict) -> Score:
     mod_parser = ModHelper(mods=score.get("mods"))
@@ -67,8 +70,9 @@ def score(score: dict) -> Score:
         player=player(score.get("player")),
         map=beatmap(score.get("bmap")),
         date=score.get("date"),
-        leaderboard_rank=score.get("rank")
+        leaderboard_rank=score.get("rank"),
     )
+
 
 def leaderboard(players: list[dict]) -> list[Player]:
     lb = []
@@ -81,13 +85,14 @@ def leaderboard(players: list[dict]) -> list[Player]:
 
     return lb
 
+
 def beatmap_leaderboard(scores: list[dict]) -> list[Score]:
     lb = []
 
     rank = 0
 
     for s in scores:
-        rank+=1
+        rank += 1
         s["rank"] = rank
         s = score(s)
 

@@ -7,23 +7,30 @@ test_cases = {
     "get_leaderboard_global": lambda: __import__("get_leaderboard_global").test(),
     "get_leaderboard_country": lambda: __import__("get_leaderboard_country").test(),
     "get_leaderboard_score": lambda: __import__("get_leaderboard_score").test(),
-    "get_leaderboard_score_country": lambda: __import__("get_leaderboard_score_country").test(),
+    "get_leaderboard_score_country": lambda: __import__(
+        "get_leaderboard_score_country"
+    ).test(),
     "get_whitelist": lambda: __import__("get_whitelist").test(),
     "get_recent_scores": lambda: __import__("get_recent_scores").test(),
     "get_top_scores": lambda: __import__("get_top_scores").test(),
     "get_beatmap_fromid": lambda: __import__("get_beatmap_fromid").test(),
     "get_beatmap_frommd5": lambda: __import__("get_beatmap_frommd5").test(),
-    "get_beatmap_leaderboard_fromid": lambda: __import__("get_beatmap_leaderboard_fromid").test(),
-    "get_beatmap_leaderboard_frommd5": lambda: __import__("get_beatmap_leaderboard_frommd5").test(),
+    "get_beatmap_leaderboard_fromid": lambda: __import__(
+        "get_beatmap_leaderboard_fromid"
+    ).test(),
+    "get_beatmap_leaderboard_frommd5": lambda: __import__(
+        "get_beatmap_leaderboard_frommd5"
+    ).test(),
 }
 
 success = 0
 failed = 0
 
+
 async def main():
     global success, failed
     print(f"Running {len(test_cases)} tests...\n")
-    
+
     for name, func in test_cases.items():
         print(f"Running test '{name}'...")
         try:
@@ -38,6 +45,7 @@ async def main():
     print(f"✅ Tests successful: {success}")
     print(f"❌ Tests failed: {failed}")
     print(f"🧪 Total tests run: {success + failed}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

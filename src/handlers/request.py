@@ -1,5 +1,6 @@
 import aiohttp
 
+
 class AsyncRequestHandler:
     def __init__(self):
         self.url = "https://v4rx.me/api"
@@ -11,7 +12,9 @@ class AsyncRequestHandler:
                 async with session.get(full_url) as response:
                     if response.status == 200:
                         res = await response.json()
-                        if endpoint == "/wl": # Goofy aah fix for the whitelist endpoint since it has a different response format
+                        if (
+                            endpoint == "/wl"
+                        ):  # Goofy aah fix for the whitelist endpoint since it has a different response format
                             return res
                         return res.get("data")
                     else:

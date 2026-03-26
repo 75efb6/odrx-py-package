@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 
-from objects.player import Player
 from objects.beatmap import Beatmap
+from objects.player import Player
+
 
 @dataclass
 class Score:
