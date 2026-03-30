@@ -1,8 +1,8 @@
-from odrx_py import APIClient
+from odrx_py import AsyncODRXAPIClient
 
 
 async def test():
-    client = APIClient()
+    client = AsyncODRXAPIClient()
     scores = await client.get_recent_score(user_id=1)
 
     return print(scores)

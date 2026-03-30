@@ -1,5 +1,5 @@
 import aiohttp
-import request
+import requests
 
 class AsyncRequestHandler:
     def __init__(self):
@@ -29,7 +29,7 @@ class RequestHandler:
     def get(self, endpoint: str) -> dict:
         full_url = self.url + endpoint
         try:
-            res = request.get(full_url)
+            res = requests.get(full_url)
             if res.status_code == 200:
                 res_json = res.json()
                 if (

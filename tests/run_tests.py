@@ -45,6 +45,9 @@ async def main():
     print(f"✅ Tests successful: {success}")
     print(f"❌ Tests failed: {failed}")
     print(f"🧪 Total tests run: {success + failed}")
+    if failed > 0:
+        print("Some tests failed. Please check the output above for details.")
+        exit(1)  # Exit with error code if any test failed
 
 
 if __name__ == "__main__":

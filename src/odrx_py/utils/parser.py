@@ -1,5 +1,6 @@
-from classes import Beatmap, Player, Score, Stats
-from utils import ModHelper
+from ..classes import Beatmap, Player, Score, Stats
+from ..utils import ModHelper
+from ..enums import BeatmapStatus, BeatmapMode
 
 
 def player(player: dict) -> Player:
@@ -41,9 +42,9 @@ def beatmap(bmap: dict) -> Beatmap:
         cs=bmap.get("cs"),
         od=bmap.get("od"),
         hp=bmap.get("hp"),
-        mode=bmap.get("mode"),
+        mode=BeatmapMode(bmap.get("mode")).__str__(),
         stars=bmap.get("star"),
-        status=bmap.get("status"),
+        status=BeatmapStatus(bmap.get("status")).__str__(),
         lenght=bmap.get("lenght"),
     )
 

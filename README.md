@@ -7,10 +7,10 @@ pip install odrx_py
 ## Quick Start
 
 ```python
-from odrx_py import APIClient
+from odrx_py import AsyncODRXAPIClient
 
 # Initialize client
-client = APIClient()
+client = AsyncODRXAPIClient()
 
 # Get user by ID
 user = await client.get_user_fromid(12345)
@@ -56,5 +56,5 @@ top_scores = await client.get_top_scores(12345)
 For whitelist operations, provide your whitelist key:
 
 ```python
-client = APIClient(whitelist_key="your_key_here")
+client = AsyncODRXAPIClient(whitelist_key="your_key_here")
 ```

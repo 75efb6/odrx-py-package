@@ -2,23 +2,17 @@
 set -e  # Stop on first error
 
 echo "🧹 Cleaning old artifacts..."
-rm -rf src/build src/dist src/*.egg-info
+rm -rf ./build ./dist ./*.egg-info
 
-echo "Activating venv..."
-rm -rf .venv
-python -m venv .venv
-chmod +x .venv/bin/activate
-source .venv/bin/activate
-
-echo "🐍 Python version:"
-python --version
+# Run tests before building to ensure everything is working
+echo "🔍 Running tests before build..."
+./tests.sh
 
 echo "⬆️ Installing build dependencies..."
-python -m pip install --upgrade pip setuptools wheel
+python -m pip install --upgrade pip setuptools wheel build
 
 echo "📦 Building package..."
-cd src/
-python setup.py sdist bdist_wheel
+python -m build .
 
 echo "📥 Installing package locally..."
 python -m pip install dist/*.whl --force-reinstall

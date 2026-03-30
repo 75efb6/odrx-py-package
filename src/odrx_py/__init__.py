@@ -1,2 +1,1 @@
-from .structs import AsyncODRXAPIClient
-from .structs import ODRXAPIClient
+from .structs import AsyncODRXAPIClient, ODRXAPIClient

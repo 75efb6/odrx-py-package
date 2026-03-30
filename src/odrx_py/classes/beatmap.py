@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from ..enums import BeatmapStatus
 
 
 @dataclass
@@ -16,5 +17,5 @@ class Beatmap:
     od: int
     mode: int
     stars: int
-    status: int
+    status: BeatmapStatus
     lenght: int

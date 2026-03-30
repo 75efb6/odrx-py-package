@@ -1,8 +1,8 @@
-from odrx_py import APIClient
+from odrx_py import AsyncODRXAPIClient
 
 
 async def test():
-    client = APIClient()
+    client = AsyncODRXAPIClient()
     lb = await client.get_leaderboard(type="score", country="US")
 
     return print(lb)

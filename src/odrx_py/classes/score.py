@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from objects.beatmap import Beatmap
-from objects.player import Player
+from .beatmap import Beatmap
+from .player import Player
 
 
 @dataclass
