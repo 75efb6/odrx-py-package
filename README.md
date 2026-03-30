@@ -1,7 +1,7 @@
 ## Installation
 
 ```bash
-pip install odrx_py
+pip install odrx-py
 ```
 
 ## Quick Start
