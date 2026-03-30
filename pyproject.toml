@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "odrx-py"
+version = "2.0.0"
+authors = [
+  { name="75efb6" }
+]
+description = "Python api wrapper for osu!droid relax"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = { file = "LICENSE" }
+
+dependencies = [
+  "requests",
+  "aiohttp"
+]
+
+
+[project.urls]
+Homepage = "https://github.com/75efb6/odrx-py-package"
+Issues = "https://github.com/75efb6/odrx-py-package/issues"
+
+
