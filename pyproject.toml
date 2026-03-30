@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "odrx-py"
+name = "odrx_py"
 version = "2.0.0"
 authors = [
   { name="75efb6" }
