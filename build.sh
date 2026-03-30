@@ -2,7 +2,7 @@
 set -e  # Stop on first error
 
 echo "🧹 Cleaning old artifacts..."
-rm -rf ./build ./dist ./*.egg-info
+rm -rf ./build ./dist ./src/*.egg-info
 
 # Run tests before building to ensure everything is working
 echo "🔍 Running tests before build..."
