@@ -1,6 +1,5 @@
 import aiohttp
 
-
 class AsyncRequestHandler:
     def __init__(self):
         self.url = "https://v4rx.me/api"

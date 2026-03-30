@@ -1,8 +1,5 @@
-from objects.beatmap import Beatmap
-from objects.player import Player
-from objects.score import Score
-from objects.stats import Stats
-from utils.helpers import ModHelper
+from classes import Beatmap, Player, Score, Stats
+from utils import ModHelper
 
 
 def player(player: dict) -> Player:
