@@ -1,11 +1,11 @@
-from ..utils import *
+from ..utils import AsyncRequestHandler, parser, helpers
 from ..classes import Beatmap, Player, Score
 from ..enums import Endpoints
 
 
 class AsyncODRXAPIClient:
     def __init__(self, whitelist_key: str = None):
-        self.api = request.AsyncRequestHandler()
+        self.api = AsyncRequestHandler()
         self.key = whitelist_key
         self.endpoints: Endpoints = Endpoints
 

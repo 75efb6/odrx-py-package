@@ -1,4 +1,4 @@
-from ..utils import *
+from ..utils import RequestHandler, parser, helpers
 from ..classes import Beatmap, Player, Score
 from ..enums import Endpoints
 
