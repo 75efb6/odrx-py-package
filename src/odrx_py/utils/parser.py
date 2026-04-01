@@ -1,6 +1,6 @@
 from ..classes import Beatmap, Player, Score, Stats
+from ..enums import BeatmapMode, BeatmapStatus
 from ..utils import ModHelper
-from ..enums import BeatmapStatus, BeatmapMode
 
 
 def player(player: dict) -> Player:

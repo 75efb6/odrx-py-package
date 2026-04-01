@@ -1,5 +1,6 @@
-from rosu_pp_py import Performance, Beatmap, BeatmapAttributesBuilder
 from pathlib import Path
+
+from rosu_pp_py import Beatmap, BeatmapAttributesBuilder, Performance
 
 
 class PPCalculator:
@@ -77,9 +78,7 @@ class PPCalculator:
                     break
 
         performance = Performance(mods=self.mods)
-        beatmap_attributes = BeatmapAttributesBuilder(
-            mods=self.mods, map=beatmap
-        )
+        beatmap_attributes = BeatmapAttributesBuilder(mods=self.mods, map=beatmap)
 
         if not applied and speed_multiplier != 1.0:
             performance.set_clock_rate(speed_multiplier)

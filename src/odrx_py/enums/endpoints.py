@@ -1,5 +1,6 @@
 from enum import StrEnum
 
+
 class Endpoints(StrEnum):
     GET_USER: str = "/get_user"
     GET_RECENT: str = "/recent"

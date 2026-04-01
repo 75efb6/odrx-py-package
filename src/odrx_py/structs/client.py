@@ -1,6 +1,6 @@
-from ..utils import RequestHandler, parser
 from ..classes import Beatmap, Player, Score
 from ..enums import Endpoints
+from ..utils import RequestHandler, parser
 
 
 class ODRXAPIClient:
@@ -30,9 +30,7 @@ class ODRXAPIClient:
         return parser.beatmap(req)
 
     def get_beatmap_leaderboard_fromid(self, map_id: int) -> list[Score]:
-        req = self.api.get(
-            self.endpoints.BEATMAP_LEADERBOARD + f"?bid={map_id}"
-        )
+        req = self.api.get(self.endpoints.BEATMAP_LEADERBOARD + f"?bid={map_id}")
 
         return parser.beatmap_leaderboard(req)
 
@@ -41,9 +39,7 @@ class ODRXAPIClient:
 
         return parser.beatmap_leaderboard(req)
 
-    def get_leaderboard(
-        self, type: str = "pp", country: str = None
-    ) -> list[Player]:
+    def get_leaderboard(self, type: str = "pp", country: str = None) -> list[Player]:
         if type not in ["pp", "score"]:
             raise ValueError("Invalid leaderboard type. Must be 'pp' or 'score'.")
 
@@ -56,45 +52,33 @@ class ODRXAPIClient:
         return parser.leaderboard(req)
 
     def get_top_scores(self, user_id: int) -> list[Score]:
-        req = self.api.get(
-            self.endpoints.TOP_SCORES + f"?id={user_id}&limit=100"
-        )
+        req = self.api.get(self.endpoints.TOP_SCORES + f"?id={user_id}&limit=100")
 
         return [parser.score(score) for score in req]
 
     def get_recent_score(self, user_id: int, offset: int = 0) -> list[Score]:
-        req = self.api.get(
-            self.endpoints.GET_RECENT + f"?id={user_id}&offset={offset}"
-        )
+        req = self.api.get(self.endpoints.GET_RECENT + f"?id={user_id}&offset={offset}")
 
         return parser.score(req)
 
     def get_scores_uid_beatmap_fromid(self, user_id: int, map_id: int) -> Beatmap:
-        req = self.api.get(
-            self.endpoints.BEATMAP_SCORE + f"?id={map_id}&uid={user_id}"
-        )
+        req = self.api.get(self.endpoints.BEATMAP_SCORE + f"?id={map_id}&uid={user_id}")
 
         return parser.beatmap(req)
 
     def get_scores_uid_beatmap_frommd5(self, user_id: int, md5: str) -> Beatmap:
-        req = self.api.get(
-            self.endpoints.BEATMAP_SCORE + f"?md5={md5}&uid={user_id}"
-        )
+        req = self.api.get(self.endpoints.BEATMAP_SCORE + f"?md5={md5}&uid={user_id}")
 
         return parser.beatmap(req)
 
-    def get_scores_uname_beatmap_fromid(
-        self, username: str, map_id: int
-    ) -> Beatmap:
+    def get_scores_uname_beatmap_fromid(self, username: str, map_id: int) -> Beatmap:
         req = self.api.get(
             self.endpoints.BEATMAP_SCORE + f"?id={map_id}&username={username}"
         )
 
         return parser.beatmap(req)
 
-    def get_scores_uname_beatmap_frommd5(
-        self, username: str, md5: str
-    ) -> Beatmap:
+    def get_scores_uname_beatmap_frommd5(self, username: str, md5: str) -> Beatmap:
         req = self.api.get(
             self.endpoints.BEATMAP_SCORE + f"?md5={md5}&username={username}"
         )
@@ -123,7 +107,5 @@ class ODRXAPIClient:
         if not self.key:
             raise ValueError("Whitelist key is required for this endpoint.")
 
-        self.api.get(
-            self.endpoints.WHITELIST_ADD + f"?md5={md5}&key={self.key}"
-        )
+        self.api.get(self.endpoints.WHITELIST_ADD + f"?md5={md5}&key={self.key}")
         return "Beatmap added to whitelist."

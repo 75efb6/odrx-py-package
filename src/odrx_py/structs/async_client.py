@@ -1,6 +1,6 @@
-from ..utils import AsyncRequestHandler, parser
 from ..classes import Beatmap, Player, Score
 from ..enums import Endpoints
+from ..utils import AsyncRequestHandler, parser
 
 
 class AsyncODRXAPIClient:
@@ -30,9 +30,7 @@ class AsyncODRXAPIClient:
         return parser.beatmap(req)
 
     async def get_beatmap_leaderboard_fromid(self, map_id: int) -> list[Score]:
-        req = await self.api.get(
-            self.endpoints.BEATMAP_LEADERBOARD + f"?bid={map_id}"
-        )
+        req = await self.api.get(self.endpoints.BEATMAP_LEADERBOARD + f"?bid={map_id}")
 
         return parser.beatmap_leaderboard(req)
 
@@ -56,9 +54,7 @@ class AsyncODRXAPIClient:
         return parser.leaderboard(req)
 
     async def get_top_scores(self, user_id: int) -> list[Score]:
-        req = await self.api.get(
-            self.endpoints.TOP_SCORES + f"?id={user_id}&limit=100"
-        )
+        req = await self.api.get(self.endpoints.TOP_SCORES + f"?id={user_id}&limit=100")
 
         return [parser.score(score) for score in req]
 
@@ -123,7 +119,5 @@ class AsyncODRXAPIClient:
         if not self.key:
             raise ValueError("Whitelist key is required for this endpoint.")
 
-        await self.api.get(
-            self.endpoints.WHITELIST_ADD + f"?md5={md5}&key={self.key}"
-        )
+        await self.api.get(self.endpoints.WHITELIST_ADD + f"?md5={md5}&key={self.key}")
         return "Beatmap added to whitelist."

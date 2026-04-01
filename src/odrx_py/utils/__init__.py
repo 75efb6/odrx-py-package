@@ -1,3 +1,3 @@
 from .helpers import ModHelper
-from .parser import player, beatmap, score, beatmap_leaderboard, leaderboard
+from .parser import beatmap, beatmap_leaderboard, leaderboard, player, score
 from .request import AsyncRequestHandler, RequestHandler
