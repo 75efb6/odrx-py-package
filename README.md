@@ -79,8 +79,8 @@ calculator = PPCalculator(beatmap, mods=[{"acronym": "RX"}])
 calculator.calculate_performance()
 ```
 
-### Methods
-- `PPCalculator(beatmap, mods, n300, n100, n50, misses)` - Initializes the Calculator class giving it the required data.
+### Class / Methods
+- `PPCalculator(beatmap, mods, n300, n100, n50, misses, combo)` - Initializes the Calculator class giving it the required data.
 
 - `calculate_performance()` - Calculates the performance points.
 
