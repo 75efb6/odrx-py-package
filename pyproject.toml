@@ -18,8 +18,8 @@ classifiers = [
 license = { file = "LICENSE" }
 
 dependencies = [
-  "requests",
-  "aiohttp"
+  "httpx",
+  "rosu-pp-py @ git+https://github.com/unclem2/rosu-pp-py.git@main"
 ]
 
 

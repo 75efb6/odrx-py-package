@@ -14,7 +14,7 @@ echo "🐍 Python version:"
 python --version
 
 echo "⬆️ Installing test dependencies..."
-python -m pip install --upgrade pip aiohttp requests git+https://github.com/unclem2/rosu-pp-py.git
+python -m pip install --upgrade pip httpx git+https://github.com/unclem2/rosu-pp-py.git
 
 
 python3 tests/run_tests.py

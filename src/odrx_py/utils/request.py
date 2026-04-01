@@ -1,26 +1,21 @@
-import aiohttp
-import requests
+import httpx
 
 class AsyncRequestHandler:
     def __init__(self):
         self.url = "https://v4rx.me/api"
 
     async def get(self, endpoint: str) -> dict:
-        async with aiohttp.ClientSession() as session:
+        async with httpx.AsyncClient(follow_redirects=True) as session:
             full_url = self.url + endpoint
-            try:
-                async with session.get(full_url) as response:
-                    if response.status == 200:
-                        res = await response.json()
-                        if (
-                            endpoint == "/wl"
-                        ):  # Goofy aah fix for the whitelist endpoint since it has a different response format
-                            return res
-                        return res.get("data")
-                    else:
-                        raise Exception("Status code is not 200.")
-            except Exception as err:
-                raise Exception(err)
+            response = await session.get(full_url)
+            response.raise_for_status()
+
+            res = response.json()
+
+            if (endpoint == "/wl"):  # Goofy aah fix for the whitelist endpoint since it has a different response format
+                    return res
+            
+            return res.get("data")
 
 class RequestHandler:
     def __init__(self):
@@ -28,16 +23,13 @@ class RequestHandler:
 
     def get(self, endpoint: str) -> dict:
         full_url = self.url + endpoint
-        try:
-            res = requests.get(full_url)
-            if res.status_code == 200:
-                res_json = res.json()
-                if (
-                    endpoint == "/wl"
-                ):  # Goofy aah fix for the whitelist endpoint since it has a different response format
-                    return res_json
-                return res_json.get("data")
-            else:
-                raise Exception("Status code is not 200.")
-        except Exception as err:
-            raise Exception(err)
+
+        with httpx.Client(follow_redirects=True) as session:
+            res = session.get(full_url)
+            res.raise_for_status()
+            
+            res_json = res.json()
+            if (endpoint == "/wl"):  # Goofy aah fix for the whitelist endpoint since it has a different response format
+                return res_json
+            
+            return res_json.get("data")

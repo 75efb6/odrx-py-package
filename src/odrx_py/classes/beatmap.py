@@ -11,11 +11,11 @@ class Beatmap:
     title: str
     version: str
     creator: str
-    ar: int
-    cs: int
-    hp: int
-    od: int
+    ar: float
+    cs: float
+    hp: float
+    od: float
     mode: int
-    stars: int
+    stars: float
     status: BeatmapStatus
     lenght: int

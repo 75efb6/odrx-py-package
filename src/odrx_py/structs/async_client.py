@@ -1,4 +1,4 @@
-from ..utils import AsyncRequestHandler, parser, helpers
+from ..utils import AsyncRequestHandler, parser
 from ..classes import Beatmap, Player, Score
 from ..enums import Endpoints
 
@@ -10,13 +10,11 @@ class AsyncODRXAPIClient:
         self.endpoints: Endpoints = Endpoints
 
     async def get_user_fromid(self, user_id: int) -> Player:
-        helpers.check_get_user_attrs(uid=user_id)
         req = await self.api.get(self.endpoints.GET_USER + f"?id={user_id}")
 
         return parser.player(req)
 
     async def get_user_fromusername(self, username: str) -> Player:
-        helpers.check_get_user_attrs(username=username)
         req = await self.api.get(self.endpoints.GET_USER + f"?username={username}")
 
         return parser.player(req)
@@ -72,7 +70,6 @@ class AsyncODRXAPIClient:
         return parser.score(req)
 
     async def get_scores_uid_beatmap_fromid(self, user_id: int, map_id: int) -> Beatmap:
-        helpers.check_get_user_attrs(uid=user_id)
         req = await self.api.get(
             self.endpoints.BEATMAP_SCORE + f"?id={map_id}&uid={user_id}"
         )
@@ -80,7 +77,6 @@ class AsyncODRXAPIClient:
         return parser.beatmap(req)
 
     async def get_scores_uid_beatmap_frommd5(self, user_id: int, md5: str) -> Beatmap:
-        helpers.check_get_user_attrs(uid=user_id)
         req = await self.api.get(
             self.endpoints.BEATMAP_SCORE + f"?md5={md5}&uid={user_id}"
         )
@@ -90,7 +86,6 @@ class AsyncODRXAPIClient:
     async def get_scores_uname_beatmap_fromid(
         self, username: str, map_id: int
     ) -> Beatmap:
-        helpers.check_get_user_attrs(username=username)
         req = await self.api.get(
             self.endpoints.BEATMAP_SCORE + f"?id={map_id}&username={username}"
         )
@@ -100,7 +95,6 @@ class AsyncODRXAPIClient:
     async def get_scores_uname_beatmap_frommd5(
         self, username: str, md5: str
     ) -> Beatmap:
-        helpers.check_get_user_attrs(username=username)
         req = await self.api.get(
             self.endpoints.BEATMAP_SCORE + f"?md5={md5}&username={username}"
         )

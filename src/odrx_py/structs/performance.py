@@ -13,6 +13,8 @@ class PPCalculator:
         misses: int = 0,
         combo: int = 0,
     ):
+        if not beatmap.exists():
+            raise FileNotFoundError(f"Beatmap file not found: {str(beatmap)}")
         self.beatmap = beatmap
         self.mods = mods or []
         self.n300 = n300
@@ -129,4 +131,4 @@ class PPCalculator:
         if pp >= 10000:
             return 0.0
 
-        return float(pp)
+        return round(float(pp), 2)
