@@ -73,7 +73,7 @@ from pathlib import Path
 beatmap = Path(__file__).parent / "resources" / "beatmap.osu"
 
 # Initialize calculator
-calculator = PPCalculator(beatmap, mods={"acronym": "RX"})
+calculator = PPCalculator(beatmap, mods=[{"acronym": "RX"}])
 
 # Get the pp number/calculate
 calculator.calculate_performance()
