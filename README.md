@@ -1,7 +1,7 @@
 ## Installation
 
 ```bash
-pip install odrx-py
+pip install odrx-py git+https://github.com/unclem2/rosu-pp-py.git
 ```
 
 ## API Wrapper
