@@ -1,6 +1,8 @@
 import json
 from typing import Optional
+
 from ..enums import Mods
+
 
 class ModHelper:
     def __init__(self, mods: Optional[dict] = None):
@@ -20,7 +22,7 @@ class ModHelper:
                 continue
 
             mod_settings = mod.get("settings")
-            parsed_mod = mod_acronym  if mod_acronym != Mods.ShitMod else "REZ"
+            parsed_mod = mod_acronym if mod_acronym != Mods.ShitMod else "REZ"
 
             if mod_settings:
                 match mod_acronym:

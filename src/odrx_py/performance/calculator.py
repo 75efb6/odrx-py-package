@@ -1,7 +1,9 @@
 from pathlib import Path
 
 from rosu_pp_py import Beatmap, BeatmapAttributesBuilder, Performance
+
 from ..enums import Mods
+
 
 class PPCalculator:
     def __init__(
@@ -40,7 +42,11 @@ class PPCalculator:
         if not any(mod.get("acronym") == Mods.Relax for mod in self.mods):
             return 0.0
 
-        if any(mod.get("acronym") in [Mods.AutoPilot, Mods.DifficultyAdjust, Mods.WindDown, Mods.WindUp] for mod in self.mods):
+        if any(
+            mod.get("acronym")
+            in [Mods.AutoPilot, Mods.DifficultyAdjust, Mods.WindDown, Mods.WindUp]
+            for mod in self.mods
+        ):
             return 0.0
 
         beatmap = Beatmap(path=str(self.beatmap))
