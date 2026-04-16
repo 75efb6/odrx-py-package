@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from rosu_pp_py import Beatmap, BeatmapAttributesBuilder, Performance
-
+from ..enums import Mods
 
 class PPCalculator:
     def __init__(
@@ -31,16 +31,16 @@ class PPCalculator:
         # --- Extract speed multiplier ---
         speed_multiplier = 1.0
         for mod in self.mods:
-            if mod.get("acronym") == "CS":
+            if mod.get("acronym") == Mods.CustomSpeed:
                 settings = mod.get("settings", {})
                 speed_multiplier = settings.get("rateMultiplier", 1.0)
                 break
 
         # --- Validate mods ---
-        if not any(mod.get("acronym") == "RX" for mod in self.mods):
+        if not any(mod.get("acronym") == Mods.Relax for mod in self.mods):
             return 0.0
 
-        if any(mod.get("acronym") in ["AP", "DA", "WD", "WU"] for mod in self.mods):
+        if any(mod.get("acronym") in [Mods.AutoPilot, Mods.DifficultyAdjust, Mods.WindDown, Mods.WindUp] for mod in self.mods):
             return 0.0
 
         beatmap = Beatmap(path=str(self.beatmap))
@@ -53,7 +53,7 @@ class PPCalculator:
             for i, mod in enumerate(self.mods):
                 acronym = mod.get("acronym")
 
-                if acronym == "DT":
+                if acronym == Mods.DoubleTime:
                     self.mods[i] = {
                         "acronym": "DT",
                         "settings": {"speed_change": 1.5 * speed_multiplier},
@@ -61,7 +61,7 @@ class PPCalculator:
                     applied = True
                     break
 
-                elif acronym == "HT":
+                elif acronym == Mods.HalfTime:
                     self.mods[i] = {
                         "acronym": "HT",
                         "settings": {"speed_change": 0.75 * speed_multiplier},
@@ -69,7 +69,7 @@ class PPCalculator:
                     applied = True
                     break
 
-                elif acronym == "NC":
+                elif acronym == Mods.NightCore:
                     self.mods[i] = {
                         "acronym": "NC",
                         "settings": {"speed_change": 1.5 * speed_multiplier},
@@ -91,12 +91,12 @@ class PPCalculator:
         for mod in self.mods:
             acronym = mod.get("acronym")
 
-            if acronym == "PR":
+            if acronym == Mods.Precise:
                 overall_difficulty += 4
                 performance.set_od(overall_difficulty, od_with_mods=False)
                 beatmap_attributes.set_od(overall_difficulty, od_with_mods=False)
 
-            elif acronym == "RE":
+            elif acronym == Mods.ShitMod:
                 overall_difficulty = overall_difficulty / 2
 
                 performance.set_ar(beatmap.ar - 0.5, ar_with_mods=True)

@@ -66,7 +66,7 @@ client = AsyncODRXAPIClient(whitelist_key="your_key_here")
 ### Quick Start
 
 ```python
-from odrx_py import PPCalculator
+from odrx_py.performance import PPCalculator
 from pathlib import Path
 
 # Initialize Path of the beatmap
@@ -101,4 +101,40 @@ mods = [{
         "rateMultiplier": 1.0
     }
 }]
+```
+
+#### StrEnum of all Mods (src/enums/mods.py)
+```python
+from enum import StrEnum
+
+class Mods(StrEnum):
+  Relax = "RX"
+  DifficultyAdjust = "DA"
+  NightCore = "NC"
+  CustomSpeed = "CS"
+  DoubleTime = "DT"
+  Hidden = "HD"
+  FlashLight = "FL"
+  ShitMod = "RE" # REZ
+  WindUp = "WU"
+  Precise = "PR"
+  HardRock = "HR"
+  HalfTime = "HT"
+  AutoPilot = "AP"
+  WindDown = "WD"
+  ApproachDifferent = "AD"
+  Auto = "AT"
+  Easy = "EZ"
+  FreezeFrame = "FR"
+  Mirror = "MR"
+  Muted = "MU"
+  NoFail = "NF"
+  Random = "RD"
+  ScoreV2 = "V2"
+  SmallCircle = "SC"
+  SuddenDeath = "SD"
+  Perfect = "PF"
+  Traceable = "TC"
+  Synesthesia = "SY"
+  NoMod = "NM"
 ```

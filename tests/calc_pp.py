@@ -1,4 +1,4 @@
-from odrx_py import PPCalculator
+from odrx_py.performance import PPCalculator
 from pathlib import Path
 
 async def test():
