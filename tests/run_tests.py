@@ -22,6 +22,7 @@ test_cases = {
         "get_beatmap_leaderboard_frommd5"
     ).test(),
     "calc_pp": lambda: __import__("calc_pp").test(),
+    "calc_rating": lambda: __import__("calc_rating").test(),
 }
 
 success = 0
