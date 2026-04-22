@@ -61,28 +61,36 @@ For whitelist operations, provide your whitelist key:
 client = AsyncODRXAPIClient(whitelist_key="your_key_here")
 ```
 
-## Performance Calculator
+## Performance Calculator and Rating Calculator
 
 ### Quick Start
 
 ```python
 from odrx_py.performance import PPCalculator
+from odrx_py.rating import SRCalculator
 from pathlib import Path
 
 # Initialize Path of the beatmap
 beatmap = Path(__file__).parent / "resources" / "beatmap.osu"
 
-# Initialize calculator
-calculator = PPCalculator(beatmap, mods=[{"acronym": "RX"}])
+# Initialize calculators
+pp_calculator = PPCalculator(beatmap, mods=[{"acronym": "RX"}])
+rating_calculator = SRCalculator(beatmap, mods=[{"acronym": "RX"}])
 
-# Get the pp number/calculate
-calculator.calculate_performance()
+# Get the pp/star number/calculate
+pp_calculator.calculate_performance()
+rating_calculator.calculate_rating()
 ```
 
-### Class / Methods
+### Performance Calculator Docs
 - `PPCalculator(beatmap, mods, n300, n100, n50, misses, combo)` - Initializes the Calculator class giving it the required data.
 
 - `calculate_performance()` - Calculates the performance points.
+
+### Rating Calculator Docs
+- `SRCalculator(beatmap, mods)` - Initializes the Calculator class giving it the required data.
+
+- `calculate_rating()` - Calculates the rating.
 
 ### Mod Format
 
