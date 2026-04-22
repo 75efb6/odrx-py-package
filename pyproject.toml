@@ -8,7 +8,7 @@ version = "2.1.1"
 authors = [
   { name="75efb6" }
 ]
-description = "Python api wrapper for osu!droid relax"
+description = "Python API wrapper and PP/Star Rating calculation for osu!droid relax"
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
