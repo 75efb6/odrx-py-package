@@ -33,61 +33,61 @@ class PPCalculator:
         # --- Extract speed multiplier ---
         speed_multiplier = 1.0
         for mod in self.mods:
-            if mod.get("acronym") == Mods.CustomSpeed:
+            if mod.get("acronym") == "CS":
                 settings = mod.get("settings", {})
                 speed_multiplier = settings.get("rateMultiplier", 1.0)
                 break
 
         # --- Validate mods ---
-        if not any(mod.get("acronym") == Mods.Relax for mod in self.mods):
+        if not any(mod.get("acronym") == "RX" for mod in self.mods):
             return 0.0
 
-        if any(
-            mod.get("acronym")
-            in [Mods.AutoPilot, Mods.DifficultyAdjust, Mods.WindDown, Mods.WindUp]
-            for mod in self.mods
-        ):
+        if any(mod.get("acronym") in ["AP", "DA", "WD", "WU"] for mod in self.mods):
             return 0.0
 
         beatmap = Beatmap(path=str(self.beatmap))
         overall_difficulty = beatmap.od - 4
 
+        # --- Strip CS mod before passing to rosu-pp-py ---
+        submit_mods = [mod for mod in self.mods if mod.get("acronym") != "CS"]
+
         applied = False
 
         # --- Apply speed mods correctly ---
         if speed_multiplier != 1.0:
-            for i, mod in enumerate(self.mods):
+            for i, mod in enumerate(submit_mods):
                 acronym = mod.get("acronym")
 
-                if acronym == Mods.DoubleTime:
-                    self.mods[i] = {
+                if acronym == "DT":
+                    submit_mods[i] = {
                         "acronym": "DT",
                         "settings": {"speed_change": 1.5 * speed_multiplier},
                     }
                     applied = True
                     break
 
-                elif acronym == Mods.HalfTime:
-                    self.mods[i] = {
+                elif acronym == "HT":
+                    submit_mods[i] = {
                         "acronym": "HT",
                         "settings": {"speed_change": 0.75 * speed_multiplier},
                     }
                     applied = True
                     break
 
-                elif acronym == Mods.NightCore:
-                    self.mods[i] = {
+                elif acronym == "NC":
+                    submit_mods[i] = {
                         "acronym": "NC",
                         "settings": {"speed_change": 1.5 * speed_multiplier},
                     }
                     applied = True
                     break
 
-        performance = Performance(mods=self.mods)
-        beatmap_attributes = BeatmapAttributesBuilder(mods=self.mods, map=beatmap)
+        performance = Performance(mods=submit_mods)
+        beatmap_attributes = BeatmapAttributesBuilder(mods=submit_mods, map=beatmap)
 
         if not applied and speed_multiplier != 1.0:
             performance.set_clock_rate(speed_multiplier)
+            beatmap_attributes.set_clock_rate(speed_multiplier)  # Bug 2 fix
 
         # --- Base OD adjustments ---
         performance.set_od(overall_difficulty, od_with_mods=False)
@@ -97,12 +97,12 @@ class PPCalculator:
         for mod in self.mods:
             acronym = mod.get("acronym")
 
-            if acronym == Mods.Precise:
+            if acronym == "PR":
                 overall_difficulty += 4
                 performance.set_od(overall_difficulty, od_with_mods=False)
                 beatmap_attributes.set_od(overall_difficulty, od_with_mods=False)
 
-            elif acronym == Mods.ShitMod:
+            elif acronym == "RE":
                 overall_difficulty = overall_difficulty / 2
 
                 performance.set_ar(beatmap.ar - 0.5, ar_with_mods=True)
