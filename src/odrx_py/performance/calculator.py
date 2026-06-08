@@ -26,59 +26,54 @@ class PPCalculator:
         self.misses = misses
         self.combo = combo
 
+    def _get_acronym(self, mod: dict) -> str:
+        return mod.get("acronym", "")
+
     def calculate_performance(self) -> float:
         if not self.mods:
             return 0.0
 
+        acronyms = [self._get_acronym(m) for m in self.mods]
+
         # --- Extract speed multiplier ---
         speed_multiplier = 1.0
         for mod in self.mods:
-            if mod.get("acronym") == "CS":
-                settings = mod.get("settings", {})
-                speed_multiplier = settings.get("rateMultiplier", 1.0)
+            if self._get_acronym(mod) == Mods.CustomSpeed:
+                speed_multiplier = mod.get("settings", {}).get("rateMultiplier", 1.0)
                 break
 
         # --- Validate mods ---
-        if not any(mod.get("acronym") == "RX" for mod in self.mods):
+        if Mods.Relax not in acronyms:
             return 0.0
 
-        if any(mod.get("acronym") in ["AP", "DA", "WD", "WU"] for mod in self.mods):
+        if any(m in acronyms for m in (Mods.AutoPilot, Mods.DifficultyAdjust, Mods.WindDown, Mods.WindUp)):
             return 0.0
 
         beatmap = Beatmap(path=str(self.beatmap))
         overall_difficulty = beatmap.od - 4
 
         # --- Strip CS mod before passing to rosu-pp-py ---
-        submit_mods = [mod for mod in self.mods if mod.get("acronym") != "CS"]
+        submit_mods = [mod for mod in self.mods if self._get_acronym(mod) != Mods.CustomSpeed]
 
         applied = False
 
         # --- Apply speed mods correctly ---
         if speed_multiplier != 1.0:
             for i, mod in enumerate(submit_mods):
-                acronym = mod.get("acronym")
+                acronym = self._get_acronym(mod)
 
-                if acronym == "DT":
-                    submit_mods[i] = {
-                        "acronym": "DT",
-                        "settings": {"speed_change": 1.5 * speed_multiplier},
-                    }
+                if acronym == Mods.DoubleTime:
+                    submit_mods[i] = {"acronym": Mods.DoubleTime, "settings": {"speed_change": 1.5 * speed_multiplier}}
                     applied = True
                     break
 
-                elif acronym == "HT":
-                    submit_mods[i] = {
-                        "acronym": "HT",
-                        "settings": {"speed_change": 0.75 * speed_multiplier},
-                    }
+                elif acronym == Mods.HalfTime:
+                    submit_mods[i] = {"acronym": Mods.HalfTime, "settings": {"speed_change": 0.75 * speed_multiplier}}
                     applied = True
                     break
 
-                elif acronym == "NC":
-                    submit_mods[i] = {
-                        "acronym": "NC",
-                        "settings": {"speed_change": 1.5 * speed_multiplier},
-                    }
+                elif acronym == Mods.NightCore:
+                    submit_mods[i] = {"acronym": Mods.NightCore, "settings": {"speed_change": 1.5 * speed_multiplier}}
                     applied = True
                     break
 
@@ -87,7 +82,7 @@ class PPCalculator:
 
         if not applied and speed_multiplier != 1.0:
             performance.set_clock_rate(speed_multiplier)
-            beatmap_attributes.set_clock_rate(speed_multiplier)  # Bug 2 fix
+            beatmap_attributes.set_clock_rate(speed_multiplier)
 
         # --- Base OD adjustments ---
         performance.set_od(overall_difficulty, od_with_mods=False)
@@ -95,20 +90,18 @@ class PPCalculator:
 
         # --- Handle special mods ---
         for mod in self.mods:
-            acronym = mod.get("acronym")
+            acronym = self._get_acronym(mod)
 
-            if acronym == "PR":
+            if acronym == Mods.Precise:
                 overall_difficulty += 4
                 performance.set_od(overall_difficulty, od_with_mods=False)
                 beatmap_attributes.set_od(overall_difficulty, od_with_mods=False)
 
-            elif acronym == "RE":
+            elif acronym == Mods.ShitMod:
                 overall_difficulty = overall_difficulty / 2
-
                 performance.set_ar(beatmap.ar - 0.5, ar_with_mods=True)
                 performance.set_od(overall_difficulty, od_with_mods=False)
                 performance.set_cs(beatmap.cs * 0.5, cs_with_mods=False)
-
                 beatmap_attributes.set_ar(beatmap.ar - 0.5, ar_with_mods=True)
                 beatmap_attributes.set_od(overall_difficulty, od_with_mods=False)
                 beatmap_attributes.set_cs(beatmap.cs * 0.5, cs_with_mods=False)
@@ -125,7 +118,6 @@ class PPCalculator:
 
         # --- AR bonus ---
         ar_bonus = 0.0
-
         if attrs.ar > 10.33:
             ar_bonus += 0.4 * (attrs.ar - 10.33)
         elif attrs.ar < 8.0:
