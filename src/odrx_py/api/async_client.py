@@ -115,9 +115,9 @@ class AsyncODRXAPIClient:
         )
         return parser.beatmap(bmap)
 
-    async def whitelist_add_frommd5(self, md5: str) -> str:
+    async def whitelist_add_frommd5(self, md5: str) -> Beatmap:
         if not self.key:
             raise ValueError("Whitelist key is required for this endpoint.")
 
-        await self.api.get(self.endpoints.WHITELIST_ADD + f"?md5={md5}&key={self.key}")
-        return "Beatmap added to whitelist."
+        bmap = await self.api.get(self.endpoints.WHITELIST_ADD + f"?md5={md5}&key={self.key}")
+        return parser.beatmap(bmap)
