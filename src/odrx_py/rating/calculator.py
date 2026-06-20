@@ -1,3 +1,4 @@
+
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -77,12 +78,15 @@ class SRCalculator:
                     applied = True
                     break
 
-        calc = Difficulty(mods=submit_mods)
+        # --- Build shared Difficulty and BeatmapAttributesBuilder with same overrides ---
+        calc  = Difficulty(mods=submit_mods)
+        attrs = BeatmapAttributesBuilder(mods=submit_mods, map=beatmap)
 
         if not applied and speed_multiplier != 1.0:
             calc.set_clock_rate(speed_multiplier)
+            attrs.set_clock_rate(speed_multiplier)
 
-        # --- Base OD adjustments ---
+        # --- Base OD adjustments (difficulty calc only, not attrs builder) ---
         calc.set_od(overall_difficulty, False)
 
         # --- Handle special mods ---
@@ -92,17 +96,19 @@ class SRCalculator:
             if acronym == Mods.Precise:
                 overall_difficulty += 4
                 calc.set_od(overall_difficulty, False)
+                attrs.set_od(overall_difficulty, False)
 
             elif acronym == Mods.ShitMod:
                 overall_difficulty /= 2
                 calc.set_ar(beatmap.ar - 0.5, True)
                 calc.set_od(overall_difficulty, False)
                 calc.set_cs(beatmap.cs * 0.5, False)
+                attrs.set_ar(beatmap.ar - 0.5, True)
+                attrs.set_od(overall_difficulty, False)
+                attrs.set_cs(beatmap.cs * 0.5, False)
 
-        result = calc.calculate(map=beatmap)
-
-        # --- Mod-adjusted CS and OD via BeatmapAttributesBuilder ---
-        bmap_attrs = BeatmapAttributesBuilder(mods=submit_mods, map=beatmap).build()
+        result     = calc.calculate(map=beatmap)
+        bmap_attrs = attrs.build()
 
         return BeatmapAttributes(
             stars=result.stars,
