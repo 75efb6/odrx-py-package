@@ -61,7 +61,7 @@ def score(score: dict) -> Score:
         raw_mods=score.get("mods"),
         score=score.get("score"),
         grade=score.get("grade"),
-        acc=round(float(score.get("accuracy", 0)), 2),
+        acc=round(float(score.get("acc", 0)), 2),
         combo=score.get("max_combo"),
         h300=score.get("h300"),
         h100=score.get("h100"),
