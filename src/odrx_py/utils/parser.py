@@ -52,12 +52,13 @@ def beatmap(bmap: dict) -> Beatmap:
 
 def score(score: dict) -> Score:
     mod_parser = ModHelper(mods=score.get("mods"))
-    score["mods"] = mod_parser.parse
+    mods = mod_parser.parse
 
     return Score(
         score_id=score.get("id"),
         pp=round(float(score.get("pp", 0)), 2),
-        mods=score.get("mods"),
+        mods=mods,
+        raw_mods=score.get("mods"),
         score=score.get("score"),
         grade=score.get("grade"),
         acc=round(float(score.get("accuracy", 0)), 2),
