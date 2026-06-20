@@ -8,6 +8,7 @@ from .player import Player
 class Score:
     score_id: int
     pp: float
+    raw_mods: dict
     mods: str
     score: int
     grade: str
