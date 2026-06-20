@@ -19,7 +19,7 @@ class SRCalculator:
     def _get_acronym(self, mod: dict) -> str:
         return mod.get("acronym", "")
 
-    def calculate_rating(self) -> float | None:
+    def calculate_rating(self) -> Difficulty:
         if not self.mods:
             return 0.0
 
@@ -90,4 +90,4 @@ class SRCalculator:
 
         result = calc.calculate(map=beatmap)
 
-        return round(float(result.stars), 2)
+        return result
