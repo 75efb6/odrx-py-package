@@ -1,8 +1,19 @@
+from dataclasses import dataclass
 from pathlib import Path
 
-from rosu_pp_py import Beatmap, Difficulty
+from rosu_pp_py import Beatmap, BeatmapAttributesBuilder, Difficulty
 
 from ..enums import Mods
+
+
+@dataclass
+class BeatmapAttributes:
+    stars: float
+    max_combo: int
+    ar: float
+    od: float
+    cs: float
+    hp: float
 
 
 class SRCalculator:
@@ -19,9 +30,9 @@ class SRCalculator:
     def _get_acronym(self, mod: dict) -> str:
         return mod.get("acronym", "")
 
-    def calculate_rating(self) -> Difficulty:
+    def calculate_rating(self) -> BeatmapAttributes | None:
         if not self.mods:
-            return 0.0
+            return None
 
         acronyms = [self._get_acronym(m) for m in self.mods]
 
@@ -42,7 +53,7 @@ class SRCalculator:
         beatmap = Beatmap(path=str(self.beatmap))
         overall_difficulty = beatmap.od - 4
 
-        # --- Strip CS mod and apply speed mods correctly (no mutation of self.mods) ---
+        # --- Strip CustomSpeed and apply speed mods correctly ---
         submit_mods = [mod for mod in self.mods if self._get_acronym(mod) != Mods.CustomSpeed]
 
         applied = False
@@ -72,7 +83,7 @@ class SRCalculator:
             calc.set_clock_rate(speed_multiplier)
 
         # --- Base OD adjustments ---
-        calc.set_od(overall_difficulty, od_with_mods=False)
+        calc.set_od(overall_difficulty, False)
 
         # --- Handle special mods ---
         for mod in self.mods:
@@ -80,14 +91,25 @@ class SRCalculator:
 
             if acronym == Mods.Precise:
                 overall_difficulty += 4
-                calc.set_od(overall_difficulty, od_with_mods=False)
+                calc.set_od(overall_difficulty, False)
 
             elif acronym == Mods.ShitMod:
                 overall_difficulty /= 2
-                calc.set_ar(beatmap.ar - 0.5, ar_with_mods=True)
-                calc.set_od(overall_difficulty, od_with_mods=False)
-                calc.set_cs(beatmap.cs * 0.5, cs_with_mods=False)
+                calc.set_ar(beatmap.ar - 0.5, True)
+                calc.set_od(overall_difficulty, False)
+                calc.set_cs(beatmap.cs * 0.5, False)
 
         result = calc.calculate(map=beatmap)
 
-        return result
+        # --- Mod-adjusted CS and OD via BeatmapAttributesBuilder ---
+        bmap_attrs = BeatmapAttributesBuilder(mods=submit_mods, map=beatmap).build()
+
+        return BeatmapAttributes(
+            stars=result.stars,
+            max_combo=result.max_combo,
+            ar=result.ar,
+            od=bmap_attrs.od,
+            cs=bmap_attrs.cs,
+            hp=result.hp,
+        )
+        
