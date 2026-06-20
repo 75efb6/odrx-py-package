@@ -20,3 +20,4 @@ class Beatmap:
     stars: float
     status: BeatmapStatus
     lenght: int
+    bpm: float
