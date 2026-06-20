@@ -46,7 +46,7 @@ def beatmap(bmap: dict) -> Beatmap:
         stars=round(float(bmap.get("star", 0)), 2),
         status=BeatmapStatus(bmap.get("status")).__str__(),
         lenght=bmap.get("lenght"),
-        bpm=round(float(bmap.get("bpm", 0.0), 2))
+        bpm=round(float(bmap.get("bpm", 0.0)), 2)
     )
 
 
